@@ -2,19 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>🚀 Extreme Website Analyzer</title>
   <style>
-    :root {
-      --bg:#f2f4f8;--fg:#333;--card:#fff;--heading:#f7f9fb;
+    :root { --bg:#f2f4f8;--fg:#333;--card:#fff;--heading:#f7f9fb;
       --btn:#007bff;--btn-hover:#0056b3;--error:#c00;
-      --debug-bg:#111;--debug-fg:#ccc;
-    }
-    .dark {
-      --bg:#1e1e1e;--fg:#0ff;--card:#2e2e2e;--heading:#333;
+      --debug-bg:#111;--debug-fg:#ccc; }
+    .dark { --bg:#1e1e1e;--fg:#0ff;--card:#2e2e2e;--heading:#333;
       --btn:#0056b3;--btn-hover:#003a7a;--error:#f55;
-      --debug-bg:#222;--debug-fg:#eee;
-    }
+      --debug-bg:#222;--debug-fg:#eee; }
     *{box-sizing:border-box;}
     body{margin:0;padding:0;font-family:sans-serif;
       background:var(--bg);color:var(--fg);
@@ -57,19 +53,14 @@
     .error-msg{color:var(--error);font-weight:bold;}
     .small-badge{margin-left:auto;font-size:11px;padding:4px 8px;
       background:#ffe08a;border-radius:4px;}
-    /* Fullscreen */
     #previewContainer:fullscreen,
     #previewContainer:-webkit-full-screen,
     #previewContainer:-moz-full-screen,
-    #previewContainer:-ms-fullscreen {
-      width:100vw;height:100vh;margin:0;border-radius:0;
-    }
+    #previewContainer:-ms-fullscreen{width:100vw;height:100vh;margin:0;border-radius:0;}
     #previewContainer:fullscreen #previewFrame,
     #previewContainer:-webkit-full-screen #previewFrame,
     #previewContainer:-moz-full-screen #previewFrame,
-    #previewContainer:-ms-fullscreen #previewFrame {
-      flex:1;height:auto;
-    }
+    #previewContainer:-ms-fullscreen #previewFrame{flex:1;height:auto;}
   </style>
 </head>
 <body role="application">
@@ -90,7 +81,7 @@
 
   <h1 style="text-align:center;margin:16px;">🚀 Extreme Website Analyzer</h1>
   <div id="metaInfo" role="status" aria-live="polite"></div>
-  <div id("history") id="history" aria-label="Recent URLs"></div>
+  <div id="history" aria-label="Recent URLs"></div>
   <div id="searchSection">
     <input id="searchInput" placeholder="🔍 Search sections…"/>
   </div>
@@ -104,12 +95,9 @@
       <button id="fullscreenBtn">⛶ Fullscreen</button>
       <button id="closePreview">Close Preview</button>
     </div>
-    <iframe
-      id="previewFrame"
+    <iframe id="previewFrame"
       sandbox="allow-scripts allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-top-navigation"
-      allow="fullscreen"
-      allowfullscreen
-    ></iframe>
+      allow="fullscreen" allowfullscreen></iframe>
   </div>
 
   <script>
@@ -117,23 +105,23 @@
     'use strict';
     let currentURL='', debugEnabled=false, lastBlobUrl='';
     const historyList = JSON.parse(localStorage.getItem('analyzerHistory')||'[]'),
-          urlInput    = document.getElementById('urlInput'),
-          analyzeBtn  = document.getElementById('analyzeBtn'),
-          viewBtn     = document.getElementById('viewBtn'),
-          toggleTheme = document.getElementById('toggleTheme'),
-          debugBtn    = document.getElementById('debugBtn'),
-          clearBtn    = document.getElementById('clearBtn'),
-          searchInput = document.getElementById('searchInput'),
-          resultsEl   = document.getElementById('results'),
-          historyEl   = document.getElementById('history'),
-          metaInfo    = document.getElementById('metaInfo'),
-          progressBar = document.getElementById('progress-bar'),
-          progressStage = document.getElementById('progress-stage'),
-          previewCont   = document.getElementById('previewContainer'),
-          frame         = document.getElementById('previewFrame'),
-          closePreview  = document.getElementById('closePreview'),
-          fullscreenBtn = document.getElementById('fullscreenBtn'),
-          debugPanel    = document.getElementById('debugPanel');
+          urlInput     = document.getElementById('urlInput'),
+          analyzeBtn   = document.getElementById('analyzeBtn'),
+          viewBtn      = document.getElementById('viewBtn'),
+          toggleTheme  = document.getElementById('toggleTheme'),
+          debugBtn     = document.getElementById('debugBtn'),
+          clearBtn     = document.getElementById('clearBtn'),
+          searchInput  = document.getElementById('searchInput'),
+          resultsEl    = document.getElementById('results'),
+          historyEl    = document.getElementById('history'),
+          metaInfo     = document.getElementById('metaInfo'),
+          progressBar  = document.getElementById('progress-bar'),
+          progressStage= document.getElementById('progress-stage'),
+          previewCont  = document.getElementById('previewContainer'),
+          frame        = document.getElementById('previewFrame'),
+          closePreview = document.getElementById('closePreview'),
+          fullscreenBtn= document.getElementById('fullscreenBtn'),
+          debugPanel   = document.getElementById('debugPanel');
 
     function logDebug(msg){
       if(!debugEnabled) return;
@@ -162,9 +150,7 @@
       progressStage.textContent=stages[s]||'';
       logDebug(`Progress ${p}% (${s})`);
     }
-    function debounce(fn,ms=200){
-      let t; return(...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms); };
-    }
+    function debounce(fn,ms=200){ let t; return(...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms); }; }
 
     function renderHistory(){
       historyEl.textContent='';
@@ -186,6 +172,23 @@
     };
     window.onresize();
 
+    // Try upgrade http->https if available
+    async function tryUpgradeToHTTPS(rawUrl){
+      try {
+        if(!/^http:\/\//i.test(rawUrl)) return rawUrl;
+        const httpsUrl = rawUrl.replace(/^http:\/\//i,'https://');
+        const proxy = 'https://api.allorigins.win/raw?url=';
+        const resp = await fetch(proxy + encodeURIComponent(httpsUrl), { method: 'GET' });
+        if(resp.ok){
+          logDebug(`Upgraded ${rawUrl} → ${httpsUrl}`);
+          return httpsUrl;
+        }
+      } catch(e){
+        logDebug('HTTPS upgrade failed for '+rawUrl+': '+e);
+      }
+      return rawUrl;
+    }
+
     async function fetchRawPage(url){
       const proxy='https://api.allorigins.win/raw?url=';
       const r=await fetch(proxy+encodeURIComponent(url));
@@ -206,9 +209,9 @@
         if(!res.ok) throw new Error('API fetch failed: '+res.status);
         const j=await res.json();
         if(j.error) throw new Error('API error: '+j.error.info);
-        return {html:j.parse.text['*'], title:j.parse.title};
+        return { html:j.parse.text['*'], title:j.parse.title };
       }
-      return {html:await fetchRawPage(url), title:'(none)'};
+      return { html:await fetchRawPage(url), title:'(none)' };
     }
 
     function revokeLastBlob(){
@@ -217,10 +220,12 @@
 
     async function rebuildPreview(){
       if(!currentURL) return;
-      logDebug('Rebuilding preview…');
+      currentURL = await tryUpgradeToHTTPS(currentURL);
+      urlInput.value = currentURL;
+      logDebug('Rebuilding preview for '+currentURL);
       try {
-        const raw=await fetchRawPage(currentURL);
-        const doc=new DOMParser().parseFromString(
+        const raw = await fetchRawPage(currentURL);
+        const doc = new DOMParser().parseFromString(
           raw
             .replace(/<meta[^>]+http-equiv=["']Content-Security-Policy["'][^>]*>/gi,'')
             .replace(/<meta[^>]+http-equiv=["']X-Frame-Options["'][^>]*>/gi,''),
@@ -228,7 +233,6 @@
         );
         const proxy='https://api.allorigins.win/raw?url=';
 
-        // base for relative resolution
         const base=document.createElement('base');
         base.href=currentURL; base.target='_self';
         doc.head.insertBefore(base, doc.head.firstChild);
@@ -237,11 +241,11 @@
         const linkEls=Array.from(doc.querySelectorAll('link[rel="stylesheet"]'));
         await Promise.all(linkEls.map(async link=>{
           try {
-            const href=new URL(link.getAttribute('href')||'', currentURL).href;
+            const href=new URL(link.href, currentURL).href;
             let css=await fetchRawPage(href);
-            css=css.replace(/url\((['"]?)([^)'"]+)\1\)/g,(m,quote,urlPath)=>{
-              if(urlPath.startsWith('data:')) return m;
-              const full=new URL(urlPath, href).href;
+            css=css.replace(/url\((['"]?)([^)'"]+)\1\)/g,(m,quote,p)=>{
+              if(p.startsWith('data:')) return m;
+              const full=new URL(p,href).href;
               return `url(${quote}${proxy+encodeURIComponent(full)}${quote})`;
             });
             const style=document.createElement('style');
@@ -252,36 +256,34 @@
           }
         }));
 
-        // rewrite other resources
+        // rewrite sources
         doc.querySelectorAll('[src]').forEach(el=>{
-          const attr='src';
-          const val=el.getAttribute(attr);
-          if(!val) return;
-          try {
-            const full=new URL(val, currentURL).href;
-            el.setAttribute(attr, proxy+encodeURIComponent(full));
-          } catch {}
+          const v=el.getAttribute('src');
+          if(!v) return;
+          try{
+            const full=new URL(v,currentURL).href;
+            el.setAttribute('src', proxy+encodeURIComponent(full));
+          } catch{}
         });
         doc.querySelectorAll('[srcset]').forEach(el=>{
-          const original=el.getAttribute('srcset')||'';
-          const rewritten=original.split(',')
-            .map(part=>{
-              let [u,desc]=part.trim().split(/\s+/);
-              try {
-                const full=new URL(u, currentURL).href;
-                return (proxy+encodeURIComponent(full))+(desc?' '+desc:'');
-              } catch { return part; }
-            }).join(', ');
-          el.setAttribute('srcset', rewritten);
+          const orig=el.getAttribute('srcset')||'';
+          const rw=orig.split(',').map(p=>{
+            let [u,desc]=p.trim().split(/\s+/);
+            try{
+              const full=new URL(u,currentURL).href;
+              return (proxy+encodeURIComponent(full))+(desc?' '+desc:'');
+            }catch{ return p; }
+          }).join(', ');
+          el.setAttribute('srcset', rw);
         });
         doc.querySelectorAll('link[href]').forEach(el=>{
           if(el.rel==='stylesheet') return;
           const href=el.getAttribute('href');
           if(!href) return;
-          try {
-            const full=new URL(href, currentURL).href;
+          try{
+            const full=new URL(href,currentURL).href;
             el.setAttribute('href', proxy+encodeURIComponent(full));
-          } catch {}
+          }catch{}
         });
 
         // stub dynamic behavior
@@ -324,11 +326,10 @@
         `;
         doc.head.insertBefore(stub, doc.head.firstChild);
 
-        // inline RobotoFlex font as fallback
-        const robotoUrl='https://battlecats.miraheze.org/1.43/skins/Citizen/resources/skins.citizen.styles/fonts/RobotoFlex_latin.woff2?d34c0';
+        // inline font fallback
         try {
-          const fontProxy='https://api.allorigins.win/raw?url='+encodeURIComponent(robotoUrl);
-          const fontResp=await fetch(fontProxy);
+          const fontUrl='https://battlecats.miraheze.org/1.43/skins/Citizen/resources/skins.citizen.styles/fonts/RobotoFlex_latin.woff2?d34c0';
+          const fontResp=await fetch(proxy+encodeURIComponent(fontUrl));
           if(fontResp.ok){
             const blob=await fontResp.blob();
             const fr=new FileReader();
@@ -338,11 +339,11 @@
             });
             const style=document.createElement('style');
             style.textContent=`
-              @font-face {
-                font-family: 'RobotoFlex';
-                src: url(${dataUri}) format('woff2');
-                font-weight: 100 900;
-                font-display: swap;
+              @font-face{
+                font-family:'RobotoFlex';
+                src:url(${dataUri}) format('woff2');
+                font-weight:100 900;
+                font-display:swap;
               }
             `;
             doc.head.appendChild(style);
@@ -351,17 +352,18 @@
           logDebug('Font inline failed: '+e);
         }
 
-        // blobify and set iframe src so origin is inherited
+        // blobify preview so origin is inherited
         revokeLastBlob();
         const htmlStr='<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
-        const blob=new Blob([htmlStr], {type:'text/html'});
+        const blob=new Blob([htmlStr],{type:'text/html'});
         lastBlobUrl=URL.createObjectURL(blob);
         frame.removeAttribute('srcdoc');
         frame.src=lastBlobUrl;
+
       } catch(err){
         console.error(err);
         logDebug('Preview error: '+err);
-        resultsEl.innerHTML='<p class="error-msg">Preview failed: '+err.message+'</p>';
+        resultsEl.innerHTML=`<p class="error-msg">Preview failed: ${err.message}</p>`;
       }
     }
 
@@ -403,6 +405,7 @@
       clearResults(); setProgress(0,'init');
       let url=urlInput.value.trim();
       if(!/^https?:\/\//i.test(url)) url='http://'+url;
+      url=await tryUpgradeToHTTPS(url);
       currentURL=url;
 
       try {
@@ -491,8 +494,10 @@
     }
 
     analyzeBtn.onclick=debounce(analyzeSite,200);
-    viewBtn.onclick=async()=>{
-      if(previewCont.style.display==='flex'){ clearResults(); return; }
+    viewBtn.onclick=async ()=>{
+      if(previewCont.style.display==='flex'){
+        clearResults(); return;
+      }
       await rebuildPreview();
       previewCont.style.display='flex';
       viewBtn.textContent='Hide Preview';
@@ -507,14 +512,16 @@
     },200);
 
     function clearResults(){
+      revokeLastBlob();
       resultsEl.innerHTML='🔎 Enter a URL and click “Analyze.”';
       setProgress(0,'init');
-      if(previewCont.style.display!=='none'){
+      if(previewCont.style.display==='flex'){
         previewCont.style.display='none';
         frame.src='';
         viewBtn.textContent='Preview Site';
       }
     }
+
   })();
   </script>
 </body>
