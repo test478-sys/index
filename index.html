@@ -15,104 +15,67 @@
       --btn:#0056b3;--btn-hover:#003a7a;--error:#f55;
       --debug-bg:#222;--debug-fg:#eee;
     }
-    * { box-sizing:border-box; }
-    body {
-      margin:0; padding:0; font-family:sans-serif;
-      background:var(--bg); color:var(--fg);
-      transition:background .3s,color .3s;
-    }
-    header {
-      position:sticky; top:0; background:var(--card);
-      padding:16px; box-shadow:0 2px 8px rgba(0,0,0,.1);
-      z-index:100;
-    }
-    .controls { display:flex; gap:8px; flex-wrap:wrap; }
-    input[type="text"] {
-      flex:1; min-width:200px; padding:8px; font-size:14px;
-      border:1px solid #ccc; border-radius:4px;
-      background:var(--card); color:var(--fg);
-    }
-    button {
-      padding:8px 12px; font-size:14px; border:none; border-radius:4px;
-      background:var(--btn); color:#fff; cursor:pointer;
-      transition:background .2s;
-    }
-    button:hover { background:var(--btn-hover); }
-    #debugBtn.active { background:#dc3545!important; }
-    #progress-container {
-      position:relative; height:4px; background:#ddd;
-      margin:12px 0; border-radius:2px; overflow:hidden;
-    }
-    #progress-bar {
-      height:100%; width:0; background:var(--btn);
-      transition:width .3s ease;
-    }
-    #progress-stage {
-      position:absolute; top:-18px; left:0; font-size:12px;
-      color:var(--fg);
-    }
-    #metaInfo,#history,#searchSection {
-      padding:8px 16px; background:var(--card); margin-bottom:8px;
-    }
-    #results { padding:0 24px 24px; }
-    .section {
-      margin-top:16px; border-radius:6px;
-      box-shadow:0 1px 4px rgba(0,0,0,.05);
-    }
-    .section h2 {
-      margin:0; padding:12px 16px; font-size:18px;
-      background:var(--heading); cursor:pointer;
-    }
-    .section[aria-expanded="false"] .section-content { display:none; }
-    .section-content { padding:16px; }
-    .badge {
-      padding:2px 6px; border-radius:4px; font-size:12px;
-      margin-left:8px;
-    }
-    .badge.secure   { background:#28a745; color:#fff; }
-    .badge.insecure { background:#dc3545; color:#fff; }
-    #previewContainer {
-      display:none; margin:24px 0; background:var(--card);
-      border:1px solid #ccc; border-radius:6px;
-      display:flex; flex-direction:column;
-    }
-    #previewHeader {
-      padding:8px 16px; background:var(--heading);
-      display:flex; gap:8px; align-items:center;
-    }
-    #previewFrame {
-      flex:1; border:none; width:100%;
-    }
-    #debugPanel {
-      display:none; background:var(--debug-bg); color:var(--debug-fg);
-      padding:12px; margin:16px; border-radius:6px;
-      font-family:monospace; font-size:13px;
-      max-height:200px; overflow:auto;
-    }
-    .error-msg { color:var(--error); font-weight:bold; }
-    .small-badge {
-      margin-left:auto; font-size:11px; padding:4px 8px;
-      background:#ffe08a; border-radius:4px;
-    }
+    *{box-sizing:border-box;}
+    body{margin:0;padding:0;font-family:sans-serif;
+      background:var(--bg);color:var(--fg);
+      transition:background .3s,color .3s;}
+    header{position:sticky;top:0;background:var(--card);
+      padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.1);z-index:100;}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;}
+    input[type="text"]{flex:1;min-width:200px;padding:8px;font-size:14px;
+      border:1px solid #ccc;border-radius:4px;
+      background:var(--card);color:var(--fg);}
+    button{padding:8px 12px;font-size:14px;border:none;border-radius:4px;
+      background:var(--btn);color:#fff;cursor:pointer;transition:background .2s;}
+    button:hover{background:var(--btn-hover);}
+    #debugBtn.active{background:#dc3545!important;}
+    #progress-container{position:relative;height:4px;background:#ddd;
+      margin:12px 0;border-radius:2px;overflow:hidden;}
+    #progress-bar{height:100%;width:0;background:var(--btn);
+      transition:width .3s ease;}
+    #progress-stage{position:absolute;top:-18px;left:0;font-size:12px;
+      color:var(--fg);}
+    #metaInfo,#history,#searchSection{padding:8px 16px;background:var(--card);margin-bottom:8px;}
+    #results{padding:0 24px 24px;}
+    .section{margin-top:16px;border-radius:6px;
+      box-shadow:0 1px 4px rgba(0,0,0,.05);}
+    .section h2{margin:0;padding:12px 16px;font-size:18px;
+      background:var(--heading);cursor:pointer;}
+    .section[aria-expanded="false"] .section-content{display:none;}
+    .section-content{padding:16px;}
+    .badge{padding:2px 6px;border-radius:4px;font-size:12px;margin-left:8px;}
+    .badge.secure{background:#28a745;color:#fff;}
+    .badge.insecure{background:#dc3545;color:#fff;}
+    #previewContainer{display:none;margin:24px 0;background:var(--card);
+      border:1px solid #ccc;border-radius:6px;display:flex;flex-direction:column;}
+    #previewHeader{padding:8px 16px;background:var(--heading);
+      display:flex;gap:8px;align-items:center;}
+    #previewFrame{flex:1;border:none;width:100%;}
+    #debugPanel{display:none;background:var(--debug-bg);
+      color:var(--debug-fg);padding:12px;margin:16px;border-radius:6px;
+      font-family:monospace;font-size:13px;max-height:200px;overflow:auto;}
+    .error-msg{color:var(--error);font-weight:bold;}
+    .small-badge{margin-left:auto;font-size:11px;padding:4px 8px;
+      background:#ffe08a;border-radius:4px;}
     /* Fullscreen */
     #previewContainer:fullscreen,
     #previewContainer:-webkit-full-screen,
     #previewContainer:-moz-full-screen,
     #previewContainer:-ms-fullscreen {
-      width:100vw; height:100vh; margin:0; border-radius:0;
+      width:100vw;height:100vh;margin:0;border-radius:0;
     }
     #previewContainer:fullscreen #previewFrame,
     #previewContainer:-webkit-full-screen #previewFrame,
     #previewContainer:-moz-full-screen #previewFrame,
     #previewContainer:-ms-fullscreen #previewFrame {
-      flex:1; height:auto;
+      flex:1;height:auto;
     }
   </style>
 </head>
 <body role="application">
   <header>
     <div class="controls">
-      <input id="urlInput" type="text" placeholder="https://example.org/wiki/Page"/>
+      <input id="urlInput" type="text" placeholder="https://site.org/wiki/Page_Name"/>
       <button id="analyzeBtn">Analyze</button>
       <button id="viewBtn">Preview Site</button>
       <button id="toggleTheme">🌓</button>
@@ -153,7 +116,7 @@
   <script>
   (function(){
     'use strict';
-    let currentURL = '', debugEnabled = false;
+    let currentURL='', debugEnabled=false;
     const historyList = JSON.parse(localStorage.getItem('analyzerHistory')||'[]'),
           urlInput    = document.getElementById('urlInput'),
           analyzeBtn  = document.getElementById('analyzeBtn'),
@@ -175,33 +138,29 @@
 
     function logDebug(msg){
       if(!debugEnabled) return;
-      const d = document.createElement('div');
-      d.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      const d=document.createElement('div');
+      d.textContent=`[${new Date().toLocaleTimeString()}] ${msg}`;
       debugPanel.appendChild(d);
     }
 
-    debugBtn.onclick = ()=>{
-      debugEnabled = !debugEnabled;
-      debugBtn.classList.toggle('active', debugEnabled);
-      debugPanel.style.display = debugEnabled ? 'block' : 'none';
-      debugPanel.innerHTML = '';
-      logDebug('Debug ' + (debugEnabled?'enabled':'disabled'));
+    debugBtn.onclick=()=>{
+      debugEnabled=!debugEnabled;
+      debugBtn.classList.toggle('active',debugEnabled);
+      debugPanel.style.display=debugEnabled?'block':'none';
+      debugPanel.innerHTML='';
+      logDebug('Debug '+(debugEnabled?'enabled':'disabled'));
     };
-    toggleTheme.onclick = ()=>{
+    toggleTheme.onclick=()=>{
       document.body.classList.toggle('dark');
-      localStorage.theme = document.body.classList.contains('dark')?'dark':'light';
-      logDebug('Theme set to ' + localStorage.theme);
+      localStorage.theme=document.body.classList.contains('dark')?'dark':'light';
+      logDebug('Theme set to '+localStorage.theme);
     };
     if(localStorage.theme==='dark') document.body.classList.add('dark');
 
-    const stages = {
-      init:'Initializing…',fetch:'Fetching…',
-      parse:'Parsing…',analyze:'Analyzing…',
-      render:'Rendering…',done:'Done'
-    };
+    const stages={init:'Initializing…',fetch:'Fetching…',parse:'Parsing…',analyze:'Analyzing…',render:'Rendering…',done:'Done'};
     function setProgress(p,s){
-      progressBar.style.width = p+'%';
-      progressStage.textContent = stages[s]||'';
+      progressBar.style.width=p+'%';
+      progressStage.textContent=stages[s]||'';
       logDebug(`Progress ${p}% (${s})`);
     }
     function debounce(fn,ms=200){
@@ -210,9 +169,7 @@
 
     function renderHistory(){
       historyEl.textContent='';
-      if(!historyList.length){
-        historyEl.textContent='Recent: –'; return;
-      }
+      if(!historyList.length){ historyEl.textContent='Recent: –'; return; }
       historyEl.append('Recent: ');
       historyList.forEach((u,i)=>{
         const a=document.createElement('a');
@@ -224,104 +181,124 @@
     }
     renderHistory();
 
-    window.onresize = ()=>{
-      metaInfo.textContent = navigator.userAgent
-        + ' · Viewport:' + window.innerWidth + '×' + window.innerHeight;
+    window.onresize=()=>{
+      metaInfo.textContent=navigator.userAgent+' · Viewport:'+window.innerWidth+'×'+window.innerHeight;
       logDebug('Viewport updated');
     };
     window.onresize();
 
-    // fetch raw via AllOrigins
     async function fetchRawPage(url){
-      const proxy = 'https://api.allorigins.win/raw?url=';
-      const r = await fetch(proxy + encodeURIComponent(url));
-      if(!r.ok) throw new Error('Raw fetch failed: ' + r.status);
+      const proxy='https://api.allorigins.win/raw?url=';
+      const r=await fetch(proxy+encodeURIComponent(url));
+      if(!r.ok) throw new Error('Raw fetch failed: '+r.status);
       return await r.text();
     }
 
-    // fetch via MediaWiki API if applicable
     async function fetchPage(url){
-      const m = url.match(/^(https?:\/\/[^\/]+)\/wiki\/(.*)$/);
+      const m=url.match(/^(https?:\/\/[^\/]+)\/wiki\/(.*)$/);
       if(m){
-        const page = m[2]||'Main_Page';
-        const apiUrl = m[1] + '/w/api.php'
+        const page=m[2]||'Main_Page';
+        const apiUrl=m[1]+'/w/api.php'
           + '?action=parse&redirects=true&format=json'
           + '&prop=text&page='+encodeURIComponent(page)
           + '&origin=*';
         logDebug('Using API: '+apiUrl);
-        const res = await fetch(apiUrl);
+        const res=await fetch(apiUrl);
         if(!res.ok) throw new Error('API fetch failed: '+res.status);
-        const j = await res.json();
+        const j=await res.json();
         if(j.error) throw new Error('API error: '+j.error.info);
-        return { html:j.parse.text['*'], title:j.parse.title };
+        return {html:j.parse.text['*'], title:j.parse.title};
       }
-      return { html:await fetchRawPage(url), title:'(none)' };
+      return {html:await fetchRawPage(url), title:'(none)'};
     }
 
-    // build preview with inlined CSS + proxy stubs
     async function rebuildPreview(){
       if(!currentURL) return;
       logDebug('Rebuilding preview…');
       try {
-        const raw = await fetchRawPage(currentURL);
-        const doc = new DOMParser().parseFromString(
-          raw
-            .replace(/<meta[^>]+http-equiv=["']Content-Security-Policy["'][^>]*>/gi,'')
-            .replace(/<meta[^>]+http-equiv=["']X-Frame-Options["'][^>]*>/gi,''),
-          'text/html'
-        );
-        const proxy = 'https://api.allorigins.win/raw?url=';
+        let raw=await fetchRawPage(currentURL);
+        raw=raw
+          .replace(/<meta[^>]+http-equiv=["']Content-Security-Policy["'][^>]*>/gi,'')
+          .replace(/<meta[^>]+http-equiv=["']X-Frame-Options["'][^>]*>/gi,'');
+        const doc=new DOMParser().parseFromString(raw,'text/html');
+        const proxy='https://api.allorigins.win/raw?url=';
+
+        // base for relative resolution
+        const base=document.createElement('base');
+        base.href=currentURL; base.target='_self';
+        doc.head.insertBefore(base, doc.head.firstChild);
 
         // inline and rewrite CSS
-        await Promise.all(Array.from(doc.querySelectorAll('link[rel="stylesheet"]')).map(
-          async link => {
-            const href = new URL(link.href, currentURL).href;
-            try {
-              let css = await fetchRawPage(href);
-              css = css.replace(
-                /url\((['"]?)([^)]+)\1\)/g,
-                (m,q,p) => {
-                  if(p.startsWith('data:')) return m;
-                  const full = new URL(p, href).href;
-                  return `url(${q}${proxy+encodeURIComponent(full)}${q})`;
-                }
-              );
-              const s = document.createElement('style');
-              s.textContent = css;
-              link.replaceWith(s);
-            } catch(e){
-              logDebug('CSS inline failed: '+href);
-            }
+        const linkEls=Array.from(doc.querySelectorAll('link[rel="stylesheet"]'));
+        await Promise.all(linkEls.map(async link=>{
+          try {
+            const href=new URL(link.getAttribute('href')||'', currentURL).href;
+            let css=await fetchRawPage(href);
+            css=css.replace(/url\((['"]?)([^)'"]+)\1\)/g,(m,quote,urlPath)=>{
+              if(urlPath.startsWith('data:')) return m;
+              const full=new URL(urlPath, href).href;
+              return `url(${quote}${proxy+encodeURIComponent(full)}${quote})`;
+            });
+            const style=document.createElement('style');
+            style.textContent=css;
+            link.replaceWith(style);
+          } catch(e){
+            logDebug('CSS inline failed: '+e);
           }
-        ));
+        }));
 
-        // rewrite all other resource URLs
-        doc.querySelectorAll('script[src],img[src],video[src],audio[src],source[src],track[src]').forEach(el=>{
-          const attr = el.tagName.toLowerCase()==='link'?'href':'src';
-          const full = new URL(el.getAttribute(attr), currentURL).href;
-          el.setAttribute(attr, proxy + encodeURIComponent(full));
+        // rewrite other resources
+        doc.querySelectorAll('[src]').forEach(el=>{
+          const attr='src';
+          const val=el.getAttribute(attr);
+          if(!val) return;
+          try {
+            const full=new URL(val, currentURL).href;
+            el.setAttribute(attr, proxy+encodeURIComponent(full));
+          } catch {}
+        });
+        doc.querySelectorAll('[srcset]').forEach(el=>{
+          const original=el.getAttribute('srcset')||'';
+          const rewritten=original.split(',')
+            .map(part=>{
+              let [u,desc]=part.trim().split(/\s+/);
+              try {
+                const full=new URL(u, currentURL).href;
+                return (proxy+encodeURIComponent(full))+(desc?' '+desc:'');
+              } catch { return part; }
+            }).join(', ');
+          el.setAttribute('srcset', rewritten);
+        });
+        doc.querySelectorAll('link[href]').forEach(el=>{
+          if(el.rel==='stylesheet') return;
+          const href=el.getAttribute('href');
+          if(!href) return;
+          try {
+            const full=new URL(href, currentURL).href;
+            el.setAttribute('href', proxy+encodeURIComponent(full));
+          } catch {}
         });
 
-        // stub fetch/XHR/storage/navigation
-        const stub = document.createElement('script');
-        stub.textContent = `
+        // stub dynamic behavior
+        const stub=document.createElement('script');
+        stub.textContent=`
           (function(){
             const proxy='https://api.allorigins.win/raw?url=';
             const realFetch=window.fetch;
-            window.fetch=(inp,init)=>{
-              let url=typeof inp==='string'?inp:inp.url;
+            window.fetch=function(input,init){
+              let url=typeof input==='string'?input:input.url;
               if(url.includes('/w/api.php')||url.includes('battlecats.miraheze.org/')){
                 url=proxy+encodeURIComponent(url);
               }
-              inp = typeof inp==='string'?url:new Request(url,inp);
-              return realFetch(inp,init);
+              input=typeof input==='string'?url:new Request(url,input);
+              return realFetch(input,init);
             };
             const origOpen=XMLHttpRequest.prototype.open;
-            XMLHttpRequest.prototype.open=function(m,u){
-              if(typeof u==='string'&&(u.includes('/w/api.php')||u.includes('battlecats.miraheze.org/'))){
-                u=proxy+encodeURIComponent(u.startsWith('/')?location.origin+u:u);
+            XMLHttpRequest.prototype.open=function(method,url){
+              if(typeof url==='string'&&(url.includes('/w/api.php')||url.includes('battlecats.miraheze.org/'))){
+                url=proxy+encodeURIComponent(url.startsWith('/')?location.origin+url:url);
               }
-              return origOpen.apply(this,[m,u].concat(Array.prototype.slice.call(arguments,2)));
+              return origOpen.apply(this,[method,url].concat(Array.prototype.slice.call(arguments,2)));
             };
             var _s={};
             Object.defineProperty(window,'localStorage',{value:{
@@ -331,8 +308,9 @@
               clear:()=>_s={}
             }});
             Object.defineProperty(document,'cookie',{get:()=>'',set:()=>{}});
-            document.addEventListener('click',e=>{
-              var a=e.target.closest('a'); if(a&&a.href){
+            document.addEventListener('click',function(e){
+              var a=e.target.closest('a');
+              if(a&&a.href){
                 e.preventDefault();
                 window.parent.postMessage({type:'navigate',url:a.href},'*');
               }
@@ -341,16 +319,38 @@
         `;
         doc.head.insertBefore(stub, doc.head.firstChild);
 
-        // base tag
-        const base = document.createElement('base');
-        base.href=currentURL; base.target='_self';
-        doc.head.insertBefore(base, stub.nextSibling);
+        // inline RobotoFlex font to avoid CORS
+        const robotoUrl='https://battlecats.miraheze.org/1.43/skins/Citizen/resources/skins.citizen.styles/fonts/RobotoFlex_latin.woff2?d34c0';
+        try {
+          const fontProxy='https://api.allorigins.win/raw?url='+encodeURIComponent(robotoUrl);
+          const fontResp=await fetch(fontProxy);
+          if(fontResp.ok){
+            const blob=await fontResp.blob();
+            const fr=new FileReader();
+            const dataUri=await new Promise(res=>{
+              fr.onload=()=>res(fr.result);
+              fr.readAsDataURL(blob);
+            });
+            const style=document.createElement('style');
+            style.textContent=`
+              @font-face {
+                font-family: 'RobotoFlex';
+                src: url(${dataUri}) format('woff2');
+                font-weight: 100 900;
+                font-display: swap;
+              }
+            `;
+            doc.head.appendChild(style);
+          }
+        } catch(e){
+          logDebug('Font inline failed: '+e);
+        }
 
-        frame.srcdoc = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+        frame.srcdoc='<!DOCTYPE html>\\n'+doc.documentElement.outerHTML;
       } catch(err){
         console.error(err);
-        logDebug('Preview build error: '+err);
-        resultsEl.innerHTML = `<p class="error-msg">Preview failed: ${err.message}</p>`;
+        logDebug('Preview error: '+err);
+        resultsEl.innerHTML='<p class="error-msg">Preview failed: '+err.message+'</p>';
       }
     }
 
@@ -368,7 +368,7 @@
              document.mozFullScreenElement||
              document.msFullscreenElement;
     }
-    fullscreenBtn.onclick = ()=>{
+    fullscreenBtn.onclick=()=>{
       if(!isFS()){
         (previewCont.requestFullscreen||
          previewCont.webkitRequestFullscreen||
@@ -385,7 +385,7 @@
     };
     ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange']
       .forEach(evt=>document.addEventListener(evt,()=>{
-        fullscreenBtn.textContent = isFS()?'✖ Exit Fullscreen':'⛶ Fullscreen';
+        fullscreenBtn.textContent=isFS()?'✖ Exit Fullscreen':'⛶ Fullscreen';
       }));
 
     async function analyzeSite(){
@@ -408,7 +408,6 @@
 
         const p0=doc.querySelector('p');
         const description=p0? p0.innerText.replace(/\s+/g,' ').trim():'(none)';
-
         const text=doc.body.innerText||'';
         const wordCount=text.split(/\s+/).filter(Boolean).length;
         let domDepth=0;
@@ -428,8 +427,7 @@
 
         setProgress(70,'render');
         const secure=currentURL.startsWith('https://');
-        const badge=`<span class="badge ${secure?'secure':'insecure'}">`+
-                    `${secure?'Secure':'Insecure'}</span>`;
+        const badge=`<span class="badge ${secure?'secure':'insecure'}">` + (secure?'Secure':'Insecure') + `</span>`;
         const cspList=[...html.matchAll(
           /<meta[^>]+http-equiv=["']Content-Security-Policy["'][^>]*content=["']([^"']+)["'][^>]*>/gi
         )].map(m=>m[1]);
@@ -448,11 +446,9 @@
             <h2>🛡️ Security</h2>
             <div class="section-content">
               <p><strong>CSP:</strong></p>
-              <ul>${
-                cspList.length
-                  ? cspList.map(s=>`<li>${s}</li>`).join('')
-                  : '<li>(none)</li>'
-              }</ul>
+              <ul>${cspList.length
+                ? cspList.map(s=>`<li>${s}</li>`).join('')
+                : '<li>(none)</li>'}</ul>
             </div>
           </div>
           <div class="section" aria-expanded="true">
@@ -466,20 +462,18 @@
         document.querySelectorAll('#results .section h2').forEach(h2=>{
           h2.onclick=()=>{
             const sec=h2.parentElement;
-            sec.setAttribute('aria-expanded',
-              sec.getAttribute('aria-expanded')==='true'?'false':'true'
-            );
+            sec.setAttribute('aria-expanded', sec.getAttribute('aria-expanded')==='true'?'false':'true');
           };
         });
 
         if(!historyList.includes(currentURL)) historyList.unshift(currentURL);
         if(historyList.length>5) historyList.pop();
-        localStorage.setItem('analyzerHistory',JSON.stringify(historyList));
+        localStorage.setItem('analyzerHistory', JSON.stringify(historyList));
         renderHistory();
       } catch(err){
         console.error(err);
         resultsEl.innerHTML=`<p class="error-msg">⚠️ ${err.message}</p>`;
-      } finally{
+      } finally {
         setProgress(100,'done');
         logDebug('Analysis complete');
       }
@@ -487,7 +481,9 @@
 
     analyzeBtn.onclick=debounce(analyzeSite,200);
     viewBtn.onclick=async()=>{
-      if(previewCont.style.display==='block'){ clearResults(); return; }
+      if(previewCont.style.display==='flex'){
+        clearResults(); return;
+      }
       await rebuildPreview();
       previewCont.style.display='flex';
       viewBtn.textContent='Hide Preview';
@@ -497,7 +493,7 @@
     searchInput.oninput=debounce(function(){
       const term=this.value.trim().toLowerCase();
       document.querySelectorAll('#results .section').forEach(sec=>{
-        sec.style.display=term&&!sec.innerText.toLowerCase().includes(term)?'none':'';
+        sec.style.display=term && !sec.innerText.toLowerCase().includes(term)?'none':'';
       });
     },200);
 
