@@ -47,10 +47,10 @@
     .badge.secure{background:#28a745;color:#fff;}
     .badge.insecure{background:#dc3545;color:#fff;}
     #previewContainer{display:none;margin:24px 0;background:var(--card);
-      border:1px solid #ccc;border-radius:6px;display:flex;flex-direction:column;}
+      border:1px solid #ccc;border-radius:6px;display:flex;flex-direction:column;position:relative;}
     #previewHeader{padding:8px 16px;background:var(--heading);
       display:flex;gap:8px;align-items:center;}
-    #previewFrame{flex:1;border:none;width:100%;}
+    #previewFrame{flex:1;border:none;width:100%;height:600px;}
     #debugPanel{display:none;background:var(--debug-bg);
       color:var(--debug-fg);padding:12px;margin:16px;border-radius:6px;
       font-family:monospace;font-size:13px;max-height:200px;overflow:auto;}
@@ -90,7 +90,7 @@
 
   <h1 style="text-align:center;margin:16px;">🚀 Extreme Website Analyzer</h1>
   <div id="metaInfo" role="status" aria-live="polite"></div>
-  <div id="history" aria-label="Recent URLs"></div>
+  <div id("history") id="history" aria-label="Recent URLs"></div>
   <div id="searchSection">
     <input id="searchInput" placeholder="🔍 Search sections…"/>
   </div>
@@ -109,14 +109,13 @@
       sandbox="allow-scripts allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-top-navigation"
       allow="fullscreen"
       allowfullscreen
-      srcdoc=""
     ></iframe>
   </div>
 
   <script>
   (function(){
     'use strict';
-    let currentURL='', debugEnabled=false;
+    let currentURL='', debugEnabled=false, lastBlobUrl='';
     const historyList = JSON.parse(localStorage.getItem('analyzerHistory')||'[]'),
           urlInput    = document.getElementById('urlInput'),
           analyzeBtn  = document.getElementById('analyzeBtn'),
@@ -212,15 +211,21 @@
       return {html:await fetchRawPage(url), title:'(none)'};
     }
 
+    function revokeLastBlob(){
+      if(lastBlobUrl){ URL.revokeObjectURL(lastBlobUrl); lastBlobUrl=''; }
+    }
+
     async function rebuildPreview(){
       if(!currentURL) return;
       logDebug('Rebuilding preview…');
       try {
-        let raw=await fetchRawPage(currentURL);
-        raw=raw
-          .replace(/<meta[^>]+http-equiv=["']Content-Security-Policy["'][^>]*>/gi,'')
-          .replace(/<meta[^>]+http-equiv=["']X-Frame-Options["'][^>]*>/gi,'');
-        const doc=new DOMParser().parseFromString(raw,'text/html');
+        const raw=await fetchRawPage(currentURL);
+        const doc=new DOMParser().parseFromString(
+          raw
+            .replace(/<meta[^>]+http-equiv=["']Content-Security-Policy["'][^>]*>/gi,'')
+            .replace(/<meta[^>]+http-equiv=["']X-Frame-Options["'][^>]*>/gi,''),
+          'text/html'
+        );
         const proxy='https://api.allorigins.win/raw?url=';
 
         // base for relative resolution
@@ -319,7 +324,7 @@
         `;
         doc.head.insertBefore(stub, doc.head.firstChild);
 
-        // inline RobotoFlex font to avoid CORS
+        // inline RobotoFlex font as fallback
         const robotoUrl='https://battlecats.miraheze.org/1.43/skins/Citizen/resources/skins.citizen.styles/fonts/RobotoFlex_latin.woff2?d34c0';
         try {
           const fontProxy='https://api.allorigins.win/raw?url='+encodeURIComponent(robotoUrl);
@@ -346,7 +351,13 @@
           logDebug('Font inline failed: '+e);
         }
 
-        frame.srcdoc='<!DOCTYPE html>\\n'+doc.documentElement.outerHTML;
+        // blobify and set iframe src so origin is inherited
+        revokeLastBlob();
+        const htmlStr='<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
+        const blob=new Blob([htmlStr], {type:'text/html'});
+        lastBlobUrl=URL.createObjectURL(blob);
+        frame.removeAttribute('srcdoc');
+        frame.src=lastBlobUrl;
       } catch(err){
         console.error(err);
         logDebug('Preview error: '+err);
@@ -481,9 +492,7 @@
 
     analyzeBtn.onclick=debounce(analyzeSite,200);
     viewBtn.onclick=async()=>{
-      if(previewCont.style.display==='flex'){
-        clearResults(); return;
-      }
+      if(previewCont.style.display==='flex'){ clearResults(); return; }
       await rebuildPreview();
       previewCont.style.display='flex';
       viewBtn.textContent='Hide Preview';
@@ -502,7 +511,7 @@
       setProgress(0,'init');
       if(previewCont.style.display!=='none'){
         previewCont.style.display='none';
-        frame.srcdoc='';
+        frame.src='';
         viewBtn.textContent='Preview Site';
       }
     }
